@@ -1,4 +1,8 @@
 package boggle;
+//package difficulty_adaptor;
+
+
+import difficulty_adaptor.DifficultyAdaptor;
 
 import java.util.*;
 
@@ -62,6 +66,7 @@ public class BoggleGame {
      */
     public void playGame(){
         int boardSize;
+        int difficulty;
         while(true){
             System.out.println("Enter 1 to play on a big (5x5) grid; 2 to play on a small (4x4) one:");
             String choiceGrid = scanner.nextLine();
@@ -77,6 +82,19 @@ public class BoggleGame {
             if(choiceGrid.equals("1")) boardSize = 5;
             else boardSize = 4;
 
+            //get the difficulty level
+            System.out.println("Type the number corresponding to the game difficulty: 1-Easy  2-Medium  3-Hard  4-Extreme");
+            String choiceDifficulty = scanner.nextLine();
+
+            if (choiceDifficulty == "") break;
+            while(!choiceDifficulty.equals("1") && !choiceDifficulty.equals("2") && !choiceDifficulty.equals("3") && !choiceDifficulty.equals("4")) {
+                System.out.println("please try again.");
+                System.out.println("Type the number corresponding to the game difficulty: 1-Easy  2-Medium  3-Hard  4-Extreme");
+                choiceDifficulty = scanner.nextLine();
+            }
+            difficulty = Integer.parseInt(choiceDifficulty);
+
+
             //get letter choice preference
             System.out.println("Enter 1 to randomly assign letters to the grid; 2 to provide your own.");
             String choiceLetters = scanner.nextLine();
@@ -89,7 +107,7 @@ public class BoggleGame {
             }
 
             if(choiceLetters.equals("1")){
-                playRound(boardSize,randomizeLetters(boardSize));
+                playRound(boardSize,randomizeLetters(boardSize), difficulty);
             } else {
                 System.out.println("Input a list of " + boardSize*boardSize + " letters:");
                 choiceLetters = scanner.nextLine();
@@ -98,7 +116,7 @@ public class BoggleGame {
                     System.out.println("Input a list of " + boardSize*boardSize + " letters:");
                     choiceLetters = scanner.nextLine();
                 }
-                playRound(boardSize,choiceLetters.toUpperCase());
+                playRound(boardSize,choiceLetters.toUpperCase(), difficulty);
             }
 
             //round is over! So, store the statistics, and end the round.
@@ -131,7 +149,7 @@ public class BoggleGame {
      * words on the board, and the set of words found by the user. These objects are
      * passed by reference from here to many other functions.
      */
-    public void playRound(int size, String letters){
+    public void playRound(int size, String letters, int difficulty){
         //step 1. initialize the grid
         BoggleGrid grid = new BoggleGrid(size);
         grid.initalizeBoard(letters);
@@ -143,7 +161,8 @@ public class BoggleGame {
         //step 4. allow the user to try to find some words on the grid
         humanMove(grid, allWords);
         //step 5. allow the computer to identify remaining words
-        computerMove(allWords);
+        DifficultyAdaptor temp = new DifficultyAdaptor(difficulty, allWords);
+        computerMove(temp.getAdaptedAllWords());
     }
 
     /*
@@ -170,7 +189,7 @@ public class BoggleGame {
                 randLine += s.charAt(rand);
             }
         }
-        return randLine.toLowerCase();
+        return randLine.toUpperCase();
     }
 
 
@@ -267,13 +286,19 @@ public class BoggleGame {
             Scanner raw = new Scanner(System.in);
 
             System.out.println("Which words did you find?");
-            String in = raw.nextLine().toUpperCase();
+            String in = raw.nextLine().toUpperCase().strip();
 
             if (allWords.containsKey(in)) {
                 this.gameStats.addWord(in, BoggleStats.Player.Human);
+                System.out.println("Valid word");
+                System.out.println("");
+            } else if (in.isEmpty()) {
+                break;
+            } else {
+                System.out.println("Invalid Word, Try again!");
+                System.out.println("");
             }
 
-            if (in.isEmpty()) break;
         }
     }
 
