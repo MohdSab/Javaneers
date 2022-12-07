@@ -1,7 +1,6 @@
 package boggle;
 //package difficulty_adaptor;
-
-
+import hint_function.*;
 import difficulty_adaptor.DifficultyAdaptor;
 
 import java.util.*;
@@ -273,6 +272,8 @@ public class BoggleGame {
      */
     private void humanMove(BoggleGrid board, Map<String,ArrayList<Position>> allWords){
         System.out.println("It's your turn to find some words!");
+        System.out.println("Type * to receive a hint containing the first two letters of a word!");
+        Set<String> used_hints = new HashSet<>();
         while(true) {
             //You write code here!
             //step 1. Print the board for the user, so they can scan it for words
@@ -287,8 +288,12 @@ public class BoggleGame {
 
             System.out.println("Which words did you find?");
             String in = raw.nextLine().toUpperCase().strip();
-
-            if (allWords.containsKey(in)) {
+            if (Objects.equals(in, "*")) {
+                hint temp = new hint();
+                String the_hint = temp.get_hint(allWords, used_hints);
+                System.out.println(the_hint);
+            }
+            else if (allWords.containsKey(in)) {
                 this.gameStats.addWord(in, BoggleStats.Player.Human);
                 System.out.println("Valid word");
                 System.out.println("");
