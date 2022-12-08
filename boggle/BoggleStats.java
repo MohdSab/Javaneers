@@ -16,15 +16,15 @@ public class BoggleStats {
     /**
      * set of words the computer finds in a given round 
      */  
-    private Set<String> computerWords = new HashSet<String>();
+    public Set<String> computerWords = new HashSet<String>();
     /**
      * the player's score for the current round
      */  
-    private int pScore; 
+    private int pScore;
     /**
      * the computer's score for the current round
      */  
-    private int cScore; 
+    public int cScore;
     /**
      * the player's total score across every round
      */  

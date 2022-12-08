@@ -18,7 +18,7 @@ public class BoggleGame {
     /**
      * stores game statistics
      */ 
-    private BoggleStats gameStats;
+    public BoggleStats gameStats;
 
     /**
      * dice used to randomize letter assignments for a small grid
@@ -176,7 +176,7 @@ public class BoggleGame {
      *
      * @return String a String of random letters (length 16 or 25 depending on the size of the grid)
      */
-    private String randomizeLetters(int size){
+    public String randomizeLetters(int size){
         String randLine = "";
         if (size == 4) {
             for (String s : dice_small_grid) {
@@ -222,7 +222,7 @@ public class BoggleGame {
      * @param boggleDict A dictionary of legal words
      * @param boggleGrid A boggle grid, with a letter at each position on the grid
      */
-    private void findAllWords(Map<String,ArrayList<Position>> allWords, Dictionary boggleDict, BoggleGrid boggleGrid) {
+    public void findAllWords(Map<String,ArrayList<Position>> allWords, Dictionary boggleDict, BoggleGrid boggleGrid) {
         boolean[][] visited = new boolean[boggleGrid.numRows()][boggleGrid.numCols()];
         String curr = "";
         for (int i = 0; i < boggleGrid.numRows(); i++) {
@@ -311,7 +311,7 @@ public class BoggleGame {
      *
      * @param allWords A mutable list of all legal words that can be found, given the boggleGrid grid letters
      */
-    private void computerMove(Map<String,ArrayList<Position>> all_words) {
+    public void computerMove(Map<String,ArrayList<Position>> all_words) {
         for (String word: all_words.keySet()) {
             if (!this.gameStats.getPlayerWords().contains(word)) {
                 this.gameStats.addWord(word, BoggleStats.Player.Computer);
