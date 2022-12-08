@@ -272,8 +272,10 @@ public class BoggleGame {
      */
     private void humanMove(BoggleGrid board, Map<String,ArrayList<Position>> allWords){
         System.out.println("It's your turn to find some words!");
+        System.out.println("");
         System.out.println("Type * to receive a hint containing the first two letters of a word!");
         Set<String> used_hints = new HashSet<>();
+
         while(true) {
             //You write code here!
             //step 1. Print the board for the user, so they can scan it for words
