@@ -78,7 +78,7 @@ public class BoggleGrid {
     }
 
     /* 
-     * @return int the number of columns on the board (assumes square grid)
+     * @return int the number of columns on the board (assumes Square grid)
      */
     public int numCols() {
         return this.size;
