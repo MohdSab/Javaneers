@@ -23,6 +23,7 @@ import javafx.stage.Stage;
 import javax.swing.*;
 import java.io.IOException;
 import java.util.*;
+import hint_function.hint;
 
 
 public class GuiController {
@@ -42,7 +43,7 @@ public class GuiController {
     @FXML
     Button endGameButton, hintButton, startButton, button4x4, button5x5, checkButton, finalEndButton;
     @FXML
-    Button lev1, lev2, lev3, lev4;
+    Button lev1, lev2, lev3, lev4, quitButton;
     @FXML
     Button tile00, tile01, tile02, tile03, tile10, tile11, tile12, tile13, tile20, tile21, tile22, tile23, tile30, tile31, tile32, tile33;
 
@@ -50,49 +51,44 @@ public class GuiController {
     BoggleGame boggleGame = new BoggleGame();
     Dictionary boggleDict;
     BoggleGrid boggleGrid4x4 = new BoggleGrid(4);
-    BoggleGrid boggleGrid5x5 = new BoggleGrid(5);
 
     String string4x4 = boggleGame.randomizeLetters(4);
-    String string5x5 = boggleGame.randomizeLetters(5);
 
 
     Map<String, ArrayList<Position>> allWords = new HashMap<>();
 
 
 
-    public void switchToMainScene(ActionEvent event) throws IOException{
-        Parent root = FXMLLoader.load((Objects.requireNonNull(getClass().getResource("mainScene.fxml"))));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        stage.setTitle("Mightier Boggle");
-        stage.setResizable(false);
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-
-
-        Button sourceButton = (Button) event.getSource();
-
-        if(sourceButton == lev1){
-            difficultyLevel = 1;
-        }
-
-        else if(sourceButton == lev2){
-            difficultyLevel = 2;
-        }
-
-        else if(sourceButton == lev3){
-            difficultyLevel = 3;}
-
-        else if(sourceButton == lev4){
-            difficultyLevel = 4;
-        }
-//        System.out.println(difficultyLevel);
-//        System.out.println(boardSize);
-
-
-    }
+//    public void switchToMainScene(ActionEvent event) throws IOException{
+//        Parent root = FXMLLoader.load((Objects.requireNonNull(getClass().getResource("mainScene.fxml"))));
+//        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+//        stage.setTitle("Mightier Boggle");
+//        stage.setResizable(false);
+//        scene = new Scene(root);
+//        stage.setScene(scene);
+//        stage.show();
+//
+//
+//        Button sourceButton = (Button) event.getSource();
+//
+//        if(sourceButton == lev1){
+//            difficultyLevel = 1;
+//        }
+//
+//        else if(sourceButton == lev2){
+//            difficultyLevel = 2;
+//        }
+//
+//        else if(sourceButton == lev3){
+//            difficultyLevel = 3;}
+//
+//        else if(sourceButton == lev4){
+//            difficultyLevel = 4;
+//        }
+//    }
 
     public void switchTo4x4Scene(ActionEvent event) throws IOException{
+
 
 
         Parent root = FXMLLoader.load((Objects.requireNonNull(getClass().getResource("4x4Scene.fxml"))));
@@ -121,22 +117,22 @@ public class GuiController {
         }
     }
 
-    public void switchTo5x5Scene(ActionEvent event) throws IOException{
 
-        Parent root = FXMLLoader.load((Objects.requireNonNull(getClass().getResource("5x5Scene.fxml"))));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        stage.setTitle("Mightier Boggle");
-        stage.setResizable(false);
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
 
     public void setup4x4Board(ActionEvent event) throws IOException{
+
+        textWordArea.setPromptText("Type Your Word!");
+        startButton.setDisable(true);
+        hintButton.setDisable(false);
+        endGameButton.setDisable(false);
+        quitButton.setDisable(false);
+        checkButton.setDisable(false);
+        textWordArea.setDisable(false);
 
         boggleDict = new Dictionary("wordlist.txt");
         boggleGrid4x4.initalizeBoard(string4x4);
         boggleGame.findAllWords(allWords, boggleDict, boggleGrid4x4);
+
 
 
         tile00.setText(String.valueOf(string4x4.charAt(0)));
@@ -159,43 +155,54 @@ public class GuiController {
     }
 
     public void endGame(ActionEvent event) throws IOException{
+        textWordArea.clear();
+        textWordArea.setPromptText("Thanks For Playing!");
+        checkButton.setDisable(true);
+
         DifficultyAdaptor temp = new DifficultyAdaptor(difficultyLevel, allWords);
         boggleGame.computerMove(temp.getAdaptedAllWords());
+        hintButton.setDisable(true);
 
         for (String word : boggleGame.gameStats.computerWords){
             computerFoundArea.appendText(word + "\n");
         }
         computerScore.setText(Integer.toString(boggleGame.gameStats.cScore));
         endGameButton.setDisable(true);
-
-//        Platform.exit();
-
     }
 
     public void setCheckButton(ActionEvent event) throws IOException{
-
-
-
         String foundWord = textWordArea.getText().strip();
-        if (allWords.containsKey(foundWord.toUpperCase())){
+        if (allWords.containsKey(foundWord.toUpperCase()) && !boggleGame.gameStats.getPlayerWords().contains(foundWord)){
             boggleGame.gameStats.addWord(foundWord, BoggleStats.Player.Human);
             gameScore.setText(Integer.toString(boggleGame.gameStats.getScore()));
             textFoundArea.appendText(foundWord + "\n");
             foundStrings.add(foundWord);
-
+            textWordArea.clear();
+            textWordArea.setPromptText("That's a correct word!");
+            }else {
+            textWordArea.clear();
+            textWordArea.setPromptText("Incorrect Word");
         }
+
+
     }
 
-//    public void setFinalEndButton(ActionEvent event) throws IOException{
-//        System.out.println(difficultyLevel);
-//
-//        for (String s : foundStrings){
-//            System.out.println(s);
-//        }
-//        Platform.exit();
-//        System.out.println(boggleGame.toString());
-//        System.out.println(boggleGame.gameStats.getPlayerWords());
-//    }
+    public void quitGame(ActionEvent event) throws IOException{
+        Platform.exit();
+    }
+
+    public void getHint(ActionEvent event) throws IOException{
+        hint h = new hint();
+        String hint = h.get_hint(allWords, boggleGame.gameStats.getPlayerWords());
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setContentText(hint);
+        alert.setHeaderText("Boggle Hint");
+        alert.setTitle("Mightier Boggle");
+        alert.show();
+    }
+
+
 
 
 }

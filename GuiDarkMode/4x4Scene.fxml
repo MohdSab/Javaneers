@@ -108,7 +108,7 @@
             </Button>
          </children>
       </GridPane>
-      <TextArea fx:id="textWordArea" layoutX="171.0" layoutY="506.0" prefHeight="35.0" prefWidth="244.0" promptText="Type your word!">
+      <TextArea fx:id="textWordArea" disable="true" layoutX="157.0" layoutY="501.0" prefHeight="80.0" prefWidth="310.0" promptText="Click Start to Begin!">
          <font>
             <Font size="28.0" />
          </font></TextArea>
@@ -121,23 +121,23 @@
             <Font name="Arial Bold Italic" size="17.0" />
          </font>
       </Text>
-      <Button fx:id="startButton" layoutX="571.0" layoutY="365.0" mnemonicParsing="false" onAction="#setup4x4Board" prefHeight="53.0" prefWidth="108.0" text="Start" />
-      <Button fx:id="endGameButton" layoutX="571.0" layoutY="440.0" mnemonicParsing="false" onAction="#endGame" prefHeight="53.0" prefWidth="108.0" text="End Game" />
-      <Button fx:id="hintButton" layoutX="571.0" layoutY="514.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="108.0" text="Hint" />
-      <Text fill="RED" layoutX="555.0" layoutY="317.0" strokeType="OUTSIDE" strokeWidth="0.0" text="My Score:" textAlignment="CENTER" wrappingWidth="140.248046875">
+      <Button fx:id="startButton" layoutX="571.0" layoutY="242.0" mnemonicParsing="false" onAction="#setup4x4Board" prefHeight="53.0" prefWidth="108.0" text="Start" />
+      <Button fx:id="endGameButton" disable="true" layoutX="571.0" layoutY="314.0" mnemonicParsing="false" onAction="#endGame" prefHeight="53.0" prefWidth="108.0" text="End Game" />
+      <Button fx:id="hintButton" disable="true" layoutX="571.0" layoutY="514.0" mnemonicParsing="false" onAction="#getHint" prefHeight="53.0" prefWidth="108.0" text="Hint" />
+      <Text fill="RED" layoutX="368.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" text="My Score:" textAlignment="CENTER" wrappingWidth="140.248046875">
          <font>
             <Font size="18.0" />
          </font></Text>
-      <Text fx:id="gameScore" fill="RED" layoutX="604.0" layoutY="349.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="42.193359375">
+      <Text fx:id="gameScore" fill="RED" layoutX="417.0" layoutY="184.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="42.193359375">
          <font>
             <Font size="24.0" />
          </font></Text>
-      <Label layoutX="157.0" layoutY="73.0" text="Mightier Boggle">
+      <Label layoutX="157.0" prefHeight="120.0" prefWidth="544.0" text="Mightier Boggle">
          <font>
-            <Font name="AppleGothic Regular" size="71.0" />
+            <Font name="AppleGothic Regular" size="66.0" />
          </font>
       </Label>
-      <Button fx:id="checkButton" layoutX="438.0" layoutY="526.0" mnemonicParsing="false" onAction="#setCheckButton" prefHeight="41.0" prefWidth="75.0" text="Check" />
+      <Button fx:id="checkButton" disable="true" layoutX="471.0" layoutY="526.0" mnemonicParsing="false" onAction="#setCheckButton" prefHeight="41.0" prefWidth="75.0" text="Check" />
       <TextArea fx:id="computerFoundArea" editable="false" layoutX="14.0" layoutY="55.0" prefHeight="240.0" prefWidth="116.0">
          <font>
             <Font size="20.0" />
@@ -148,16 +148,16 @@
             <Font name="Arial Bold Italic" size="17.0" />
          </font>
       </Text>
-      <Text fill="RED" layoutX="555.0" layoutY="246.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Computer Score:" textAlignment="CENTER" wrappingWidth="140.248046875">
+      <Text fill="RED" layoutX="206.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Computer Score:" textAlignment="CENTER" wrappingWidth="140.248046875">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
-      <Text fx:id="computerScore" fill="RED" layoutX="604.0" layoutY="274.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="42.193359375">
+      <Text fx:id="computerScore" fill="RED" layoutX="255.0" layoutY="184.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="42.193359375">
          <font>
             <Font size="24.0" />
          </font>
       </Text>
-      <Button layoutX="625.0" layoutY="14.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="67.0" text="Quit" />
+      <Button fx:id="quitButton" disable="true" layoutX="571.0" layoutY="388.0" mnemonicParsing="false" onAction="#quitGame" prefHeight="53.0" prefWidth="108.0" text="Quit Boggle" />
     </children>
 </AnchorPane>
