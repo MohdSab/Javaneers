@@ -1,4 +1,4 @@
-#Mightier Boggle
+# Mightier Boggle
 
 Implemented the backend of the game using a recursive algorithm in Java that can find English words in a randomly generated boggle grid. 
 Implemented different methods that make sure the recursion does not run aimlessly in cases where the combination of letters are not prefixes of English words to optimize the algorithm.
